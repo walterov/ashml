@@ -1,0 +1,31 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: mnist-acr
+spec:
+  template:
+    metadata:
+      labels:
+        app: mnist-acr
+    spec:
+      containers:
+      - name: mnist
+        image: slash2acr.azurecr.io/mlflow/pfmnist-keras
+        ports:
+        - containerPort: 8080
+      imagePullSecrets:
+        - name: acrsecret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mnist-acr
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    app: mnist-acr
+
