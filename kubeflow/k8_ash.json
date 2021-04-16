@@ -1,0 +1,72 @@
+{
+  "apiVersion": "vlabs",
+  "location": "",
+  "properties": {
+    "orchestratorProfile": {
+      "orchestratorRelease": "1.17",
+      "orchestratorVersion": "1.17.17",
+      "kubernetesConfig": {
+        "apiServerConfig": {
+          "--service-account-api-audiences": "api,istio-ca",
+          "--service-account-issuer": "kubernetes.default.svc",
+          "--service-account-signing-key-file": "/etc/kubernetes/certs/apiserver.key"
+        },
+        "cloudProviderBackoff": true,
+        "cloudProviderBackoffRetries": 1,
+        "cloudProviderBackoffDuration": 30,
+        "cloudProviderRateLimit": true,
+        "cloudProviderRateLimitQPS": 100,
+        "cloudProviderRateLimitBucket": 150,
+        "cloudProviderRateLimitQPSWrite": 25,
+        "cloudProviderRateLimitBucketWrite": 30,
+        "useInstanceMetadata": false,
+        "networkPlugin": "kubenet",
+        "kubeletConfig": {
+          "--node-status-update-frequency": "1m"
+        },
+        "controllerManagerConfig": {
+          "--node-monitor-grace-period": "5m",
+          "--pod-eviction-timeout": "5m",
+          "--route-reconciliation-period": "1m"
+        }
+      }
+    },
+    "customCloudProfile": {
+      "portalURL": "https://portal.orlando.azurestack.corp.microsoft.com",
+      "identitySystem": ""
+    },
+    "featureFlags": {
+      "enableTelemetry": true
+    },
+    "masterProfile": {
+      "dnsPrefix": "sl-aks",
+      "distro": "aks-ubuntu-18.04",
+      "count": 1,
+      "vmSize": "Standard_DS3_v2"
+    },
+    "agentPoolProfiles": [
+      {
+        "name": "linuxpool",
+        "count": 3,
+        "vmSize": "Standard_DS3_v2",
+        "distro": "aks-ubuntu-18.04",
+        "availabilityProfile": "AvailabilitySet",
+        "AcceleratedNetworkingEnabled": false
+      }
+    ],
+    "linuxProfile": {
+      "adminUsername": "azureuser",
+      "ssh": {
+        "publicKeys": [
+          {
+            "keyData": "---- BEGIN SSH2 PUBLIC KEY ----\nComment: \"rsa-key-20201203\"\nAAAAB3NzaC1yc2EAAAABJQAAAQEAjFteuDoiWpIgm1dmLqrEyWRUEpVtwIJlJ6tw\n47Z6R1PQEnv6R6fo42M2bLlWwUpw0v0tPx7iVExqTS8uAhRzI7jVgZzE0sBy3EoI\nv3wwRhPRc6EKYWofYqs14cuKgKbUpc+77bwHtLrCILzbRS5gsLE4A9fuKQzoNcj+\n8FBy+d/gbmhxSGlM8cUbXQ6qNuUtXhtlHFY3oI34ZBFwj1BMdHu1/89io9k/RVj4\nFMZaND1/yKlfodVx0uLGgGsYaB+nk/8HwQxV9quPsuERT7mz6O7XVKLeOLFIVx7X\n/kfjD9ubit//816nLkIZ0ED0lNjy3nDswgdqLMdKETmcKiwsxw==\n---- END SSH2 PUBLIC KEY ----"
+          }
+        ]
+      }
+    },
+    "servicePrincipalProfile": {
+      "clientId": "2ffc88db-d8f8-4639-be2f-e7cb10a649f0",
+      "secret": "AJ0E-8ky5x_tqE1-Xq_Q-sNG69MpAl7-b5"
+    }
+  }
+}
